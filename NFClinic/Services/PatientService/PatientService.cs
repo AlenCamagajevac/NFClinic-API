@@ -16,7 +16,7 @@ namespace NFClinic.Services.PatientService
 			this.unitOfWork = unitOfWork;
 		}
 
-		public async Task Add(Patient patient)
+		public async Task AddAsync(Patient patient)
 		{
 			await unitOfWork.Patients.AddAsync(patient);
 			await unitOfWork.CompleteAsync();

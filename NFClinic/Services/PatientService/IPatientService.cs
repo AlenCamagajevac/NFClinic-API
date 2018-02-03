@@ -8,7 +8,7 @@ namespace NFClinic.Services.PatientService
 {
     public interface IPatientService
     {
-		Task Add(Patient patient);
+		Task AddAsync(Patient patient);
 
 		void Remove(Patient patient);
 
