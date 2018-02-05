@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NFClinic.Core.DomainModels;
+using NFClinic.Core.DomainModels.Pagination;
 using NFClinic.Core.Repository;
 using NFClinic.Data.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,13 +37,15 @@ namespace NFClinic.Data.Repository
 			return await NFClinicContext.Patients.SingleOrDefaultAsync(p => p.CardId == cardId);
 		}
 
-		public async Task<IEnumerable<TimelineEvent>> GetTimelineEventsAsync(string patientId)
+		public PaginatedList<TimelineEvent> GetTimelineEvents(string patientId, int page)
 		{
-			var patient = await NFClinicContext.Patients
-				.Include(p => p.TimelineEvents)
-				.SingleOrDefaultAsync(p => p.Id == patientId);
+			var timelineEvents = NFClinicContext
+				.TimelineEvents
+				.Where(te => te.PatientId == patientId)
+				.AsQueryable()
+				.AsNoTracking();
 
-			return patient.TimelineEvents ?? null;
+			return PaginatedList<TimelineEvent>.Create(timelineEvents, page, 10);
 		}
 	}
 }

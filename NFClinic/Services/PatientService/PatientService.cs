@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NFClinic.Core.DomainModels;
+using NFClinic.Core.DomainModels.Pagination;
 
 namespace NFClinic.Services.PatientService
 {
@@ -33,9 +34,9 @@ namespace NFClinic.Services.PatientService
 			return await unitOfWork.Patients.GetByCardIdAsync(cardId);
 		}
 
-		public async Task<IEnumerable<TimelineEvent>> GetTimelineEventsAsync(string patientId)
+		public PaginatedList<TimelineEvent> GetTimelineEvents(string patientId, int page)
 		{
-			return await unitOfWork.Patients.GetTimelineEventsAsync(patientId);
+			return unitOfWork.Patients.GetTimelineEvents(patientId, page);
 		}
 
 		public void Remove(Patient patient)

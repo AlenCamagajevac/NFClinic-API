@@ -1,4 +1,5 @@
 ﻿using NFClinic.Core.DomainModels;
+using NFClinic.Core.DomainModels.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace NFClinic.Core.Repository
 	{
 		Task<Patient> GetByCardIdAsync(string cardId);
 
-		Task<IEnumerable<TimelineEvent>> GetTimelineEventsAsync(string patientId);
+		PaginatedList<TimelineEvent> GetTimelineEvents(string patientId, int page);
 
 		Task AddTimelineEventAsync(string patientId, TimelineEvent timelineEvent);
     }

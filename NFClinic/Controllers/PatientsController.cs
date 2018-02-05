@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using NFClinic.ErrorValidation;
 using NFClinic.Core.DTOs.PatientDTOs;
 using NFClinic.Core.DomainModels;
+using NFClinic.Core.DomainModels.Pagination;
 
 namespace NFClinic.Controllers
 {
@@ -47,16 +48,16 @@ namespace NFClinic.Controllers
 		[HttpGet("{id}/Timeline")]
 		[AllowAnonymous]
 		[ValidateModelAttributes]
-		public async Task<IActionResult> GetPatientTimeline([FromRoute] string id)
+		public async Task<IActionResult> GetPatientTimeline([FromRoute] string id, [FromQuery] int? page)
 		{
-			var timelineEvents = await patientService.GetTimelineEventsAsync(id);
+			var timelineEvents = patientService.GetTimelineEvents(id, page ?? 1);
 
 			if (timelineEvents == null)
 			{
 				return NotFound();
 			}
 
-			return Ok(mapper.Map<IEnumerable<TimelineEvent>, IEnumerable<TimelineEventDTO>>(timelineEvents));
+			return Ok(mapper.Map<PaginatedList<TimelineEvent>, PaginatedListDTO<TimelineEventDTO>>(timelineEvents));
 		}
 
 		// POST: api/Patients
