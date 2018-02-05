@@ -11,9 +11,10 @@ using System;
 namespace NFClinic.Data.Migrations
 {
     [DbContext(typeof(NFClinicContext))]
-    partial class NFClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20180205193527_SetUniqueIndexOnPatientCardId")]
+    partial class SetUniqueIndexOnPatientCardId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

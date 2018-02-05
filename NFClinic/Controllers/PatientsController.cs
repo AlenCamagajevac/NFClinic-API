@@ -68,8 +68,15 @@ namespace NFClinic.Controllers
 		{
 			var patient = mapper.Map<CreatePatientDTO, Patient>(patientDTO);
 
-			await patientService.AddAsync(patient);
+			var existingPatient = await patientService.GetByCardIdAsync(patientDTO.CardId);
 
+			if (existingPatient != null)
+			{
+				ModelState.AddModelError("CardId", "Patient With given card already exists");
+				return BadRequest(ModelState);
+			}
+
+			await patientService.AddAsync(patient);
 			return CreatedAtAction("GetPatient", new { id = patient.CardId }, mapper.Map<Patient, PatientDTO>(patient));
 		}
 

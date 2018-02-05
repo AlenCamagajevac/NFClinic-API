@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using NFClinic.Core.DomainModels;
 using NFClinic.Core.DomainModels.Pagination;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace NFClinic.Services.PatientService
 {
@@ -21,6 +23,7 @@ namespace NFClinic.Services.PatientService
 		{
 			await unitOfWork.Patients.AddAsync(patient);
 			await unitOfWork.CompleteAsync();
+			
 		}
 
 		public async Task AddTimelineEventAsync(string patientId, TimelineEvent timelineEvent)

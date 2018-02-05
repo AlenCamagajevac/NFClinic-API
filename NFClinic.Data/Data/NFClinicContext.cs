@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NFClinic.Core.DomainModels;
 using NFClinic.Data.Models.AppUser;
+using NFClinic.Data.Models.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,9 @@ namespace NFClinic.Data.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
+			//Apply configurations
+			modelBuilder.ApplyConfiguration(new PatientConfiguration());
 		}
 	}
 }
